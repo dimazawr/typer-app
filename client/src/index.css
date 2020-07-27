@@ -2,10 +2,6 @@ body {
     background-color: rgba(0,0,0,.90);
 }
 
-html {
-    font-size: 1rem;
-}
-
 .alert-dark {
     color: #ead582;
 }
@@ -51,9 +47,17 @@ input {
 }
 
 .chat-sidebar {
-    min-width: 8rem;
+    font-size: .9rem;
+    min-width: 8em;
     text-align: center;
     background-color: #212529;
+}
+
+@media (min-width:576px) {
+    .chat-sidebar {   
+        font-size: 1rem;
+        min-width: 8rem;
+    }
 }
 
 .sidebar-title {
@@ -66,12 +70,19 @@ input {
 }
 
 .chat-message {
-    min-width: 16rem;
-    max-width: 20rem;
+    min-width: 6rem;
+    max-width: 8rem;
     box-shadow: rgba(0,0,0,.90) 2px 2px 15px;
     border-radius: 5px;
     background-color: dimgray;
     word-break: break-word;
+}
+
+@media (min-width:576px) {
+    .chat-message {
+        min-width: 16rem;
+        max-width: 20rem;
+    }
 }
 
 

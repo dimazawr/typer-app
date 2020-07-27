@@ -4,6 +4,8 @@
 
 Typer is a chatting app, where user can choose a username and a create room or join the existing one.
 
+https://chat-typer-app.herokuapp.com/
+
 ## Installation 
 
 `npm install`

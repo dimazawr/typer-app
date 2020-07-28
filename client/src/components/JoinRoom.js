@@ -52,7 +52,8 @@ const {register, handleSubmit, errors} = useForm();
                                     pattern: {
                                         value: /^[A-Za-z0-9_]{2,16}$/,
                                         message: "Username should contain at least 2 and maximum 16 characters. Allowed characters are letters, digits and underscore"
-                                    }
+                                    },
+                                    validate: { username: value => value !== "Admin" || `"Admin" is a reserved username, please choose another one` }
                                 })} 
                         />
                     </div>

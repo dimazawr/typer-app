@@ -1,18 +1,16 @@
-const express = require('express')
+const express = require('express');
 const app = express();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 const path = require("path");
-const moment = require('moment');
-const shortid = require('shortid');
+const dayjs = require('dayjs');
+const { nanoid } = require('nanoid');
 const users = require('./users')();
 
 
 const message = (username, text, id)  => {
-    return {username, text, id, msgId: shortid.generate(),time: moment().format('MMM Do HH:MM')}
+    return {username, text, id, msgId: nanoid(10),time: dayjs().format("YYYY-MM-DDTHH:mm:ss.sssZ")}
 };
-
-
 
 io.on('connection', (socket) => {
     

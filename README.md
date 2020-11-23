@@ -29,8 +29,7 @@ Client side of the project was bootstrapped with [Create React App](https://gith
 * Node.js
 * Express.js
 * socket.io
-* moment.js
-* shortid
+* dayjs
 
 ##### Frontend
 
@@ -39,3 +38,6 @@ Client side of the project was bootstrapped with [Create React App](https://gith
 * React Router
 * React-hook-form
 * Bootstrap 4
+
+### Utils
+* nanoid

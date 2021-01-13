@@ -1,32 +1,35 @@
 import React from "react";
-import { Link } from "react-router-dom"
-import logo from "../typewriter.png"
+import { useHistory } from "react-router-dom";
+import logo from "../typewriter.png";
 import { useDispatch, useSelector } from "react-redux";
-import { leaveRoom } from "../redux/actions";
-
+import { logOut } from "../redux/actions";
+import { Button, Image, Navbar } from "react-bootstrap";
 
 export const Navigation = () => {
-    const dispatch = useDispatch();
-    const userId = useSelector(state => state.socketId);
+  const dispatch = useDispatch();
+  let history = useHistory();
+  const userId = useSelector((state) => state.socketId);
 
-    const clickHandler = () => {
-        dispatch(leaveRoom(userId));
-    }
+  const clickHandler = () => {
+    dispatch(logOut(userId));
+    history.push("/");
+  };
 
-    return (
-        <nav className="navbar bg-dark">
-            <a className="navbar-brand" href="/">
-                <img
-                    alt="App logo"
-                    src={logo}
-                    className="d-inline-block align-top"
-                    id="app-logo"
-                />{' '}
-                Typer App
-            </a>
-            <Link to="/" onClick={clickHandler}>
-            <button type="button" className="btn btn-logout">Log Out</button>
-            </Link>
-        </nav>
-    )
-}
+  return (
+    <Navbar className="bg-dark" expand="false">
+      <Navbar.Brand>
+        <Image
+          alt="App logo"
+          src={logo}
+          className="d-inline-block align-top"
+          id="app-logo"
+        />
+        <span className="navbar-brand">Typer App</span>
+      </Navbar.Brand>
+      <Button onClick={clickHandler} variant="none" className="btn-logout">
+        Log out
+        <i className="bi bi-box-arrow-in-right pl-1 icon-size"></i>
+      </Button>
+    </Navbar>
+  );
+};

@@ -21,10 +21,19 @@ class Users {
         return user
     }
 
-    getByRoom(room) {
-        return this.users.filter(user => user.room === room)
+    addRoom(id,room){
+        const user = this.get(id)
+        user.rooms.push(room);
     }
 
+    leaveRoom(id,roomToLeave){
+        const user = this.get(id)
+        return user.rooms.filter(room => room !== roomToLeave);
+    }
+
+    getAllUsers(){
+        return this.users
+    }
 }
 
 module.exports = function () {

@@ -1,3 +1,5 @@
+@import 'bootstrap-icons/font/bootstrap-icons.css';
+
 body {
     background-color: rgba(0,0,0,.90);
 }
@@ -20,7 +22,7 @@ input {
 
 .navbar-brand {
     line-height: 2.5;
-    color:  #ead582;
+    color:  #ead582 !important;
 }
 
 
@@ -48,7 +50,8 @@ input {
 
 .chat-sidebar {
     font-size: .9rem;
-    min-width: 8em;
+    min-width: 7rem;
+    overflow: scroll;
     text-align: center;
     background-color: #212529;
 }
@@ -60,9 +63,9 @@ input {
     }
 }
 
-.sidebar-title {
+.sidebar-text {
     color: #ead582;
-    margin: 10px;
+    
 }
 
 .chat-messages {
@@ -94,4 +97,13 @@ input {
     color: #fff;
     background-color: #79141e;
     border-color: #7b0b16;
+}
+
+.icon-size {
+    font-size: 1.5rem;
+}
+
+.modalContent{
+    background-color: none;
+    border: none;
 }

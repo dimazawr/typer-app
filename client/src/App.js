@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import Chat from './components/Chat';
-import JoinRoom from "./components/JoinRoom";
+import { JoinChat } from "./components/JoinChat";
 import { useSelector } from 'react-redux';
 
 
@@ -14,7 +14,7 @@ function App() {
                 {!isLoggedIn ? <Redirect to={"/"} /> : <Chat />}
             </Route>
             <Route exact path="/">
-                <JoinRoom />
+                <JoinChat />
             </Route>
             <Redirect to="/" />
         </Switch>

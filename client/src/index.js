@@ -4,6 +4,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { createStore, compose, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux'
 import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap-icons/font/bootstrap-icons.css'
 import './index.css';
 import App from './App';
 

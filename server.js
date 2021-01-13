@@ -1,60 +1,93 @@
 const express = require('express');
 const app = express();
 const http = require('http').createServer(app);
-const io = require('socket.io')(http);
+const io = require('socket.io')(http, {
+    cors: 'http://localhost:3000'
+});
 const path = require("path");
 const dayjs = require('dayjs');
 const { nanoid } = require('nanoid');
 const users = require('./users')();
 
+const rooms = new Set()
 
-const message = (username, text, id)  => {
-    return {username, text, id, msgId: nanoid(10),time: dayjs().format("YYYY-MM-DDTHH:mm:ss.sssZ")}
+const message = (username, text, id, to)  => {
+    return {username, text, id, to, msgId: nanoid(10),time: dayjs().format("YYYY-MM-DDTHH:mm:ss.sssZ")}
 };
 
-io.on('connection', (socket) => {
-    
-    socket.on('joinRoom', (data, callback) => {
+
+
+io.on('connection',(socket) => {
+    socket.on('joinChat', (data, callback) => {
         callback({
             userId: socket.id
         });
-
-        socket.join(data.room);
-
         users.add({
             id: socket.id,
             username: data.username,
-            room: data.room
+            rooms: []
         });
 
-        io.to(data.room).emit('updateUsersList', users.getByRoom(data.room));
+        io.emit('updateUsersList', users.getAllUsers())
 
-        socket.emit('newMessage',message('Admin',`Welcome to the TyperApp, ${data.username}`));
-
-        // Sends to everybody except the user who just connected
-        socket.broadcast.to(data.room).emit('newMessage',message( 'Admin',`${data.username} has joined the chat`));
     });
 
+    socket.on('joinRoom', (room, callback) => {
+        const user = users.get(socket.id);
+        socket.join(room.name)
+        rooms.add(room.name)
+        users.addRoom(socket.id,room.name)
+        let userRooms = user.rooms
+        let listOfAllRooms = [...rooms]
+        socket.emit('newMessage',message('Admin',`Welcome to ${room.name} room, ${user.username}`, nanoid(6), room.name));
+        
+
+        //Sends to everybody except the user who just connected
+        socket.broadcast.to(room.name).emit('newMessage',message( 'Admin',`${user.username} has joined the chat`, nanoid(6), room.name)); 
+
+        io.emit("updateRoomsList", listOfAllRooms)
+
+        callback({
+            room,
+            userRooms
+        })
+    })
+
     socket.on('chatMessage', (data) => {
-        const user = users.get(data.id);
+        let {text,from, to, isPrivate} = data
+        const user = users.get(data.from);
         if(user){
-            io.to(user.room).emit('newMessage', message(user.username, data.text, data.id));
+            if(!isPrivate) {
+            io.to(to).emit('newMessage', message(user.username, text, from, to));
+            }
         }
     });
 
-    socket.on('leaveRoom', id  => {
-        const user = users.remove(id);
+    socket.on("private message", (anotherSocketId, msg) => {
+        socket.to(anotherSocketId).emit("private message", socket.id, msg);
+      });
+
+    socket.on('leaveChat', ()  => {
+        const user = users.remove(socket.id);
         if (user) {
-            io.to(user.room).emit('updateUsersList', users.getByRoom(user.room));
-            io.to(user.room).emit('newMessage', message('Admin',`${user.username} left the chat`))
+            io.emit('updateUsersList', users.getAllUsers());
+            let roomsOfUser = [...socket.rooms];
+            roomsOfUser.forEach(room => {
+                io.to(room).emit('newMessage', message('Admin',`${user.username} left the chat`, nanoid(6), room))
+            });
+
         }
     });
 
     socket.on('disconnect', () => {
         const user = users.remove(socket.id);
         if (user) {
-            io.to(user.room).emit('updateUsersList', users.getByRoom(user.room));
-            io.to(user.room).emit('newMessage', message('Admin',`${user.username} left the chat`))
+            io.emit('updateUsersList', users.getAllUsers());
+            let roomsOfUser = user.rooms;
+            roomsOfUser.forEach(room => {
+                io.to(room).emit('newMessage', message('Admin',`${user.username} left the chat`, nanoid(6), room))
+            });
+            
         }
     });
 

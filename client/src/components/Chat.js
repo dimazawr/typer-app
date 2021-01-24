@@ -8,12 +8,11 @@ import { useSelector } from "react-redux";
 import { ErrorAlert } from "./ErrorAlert";
 
 function Chat() {
-
-    const socketError = useSelector(state => state.error);
+  const socketError = useSelector(state => state.error);
 
   return (
     <div>
-        {socketError.isShown && <ErrorAlert text={socketError.text} />}
+      {socketError.isShown && <ErrorAlert text={socketError.text} />}
       <Navigation />
       <div className="d-flex flex-row chat-container">
         <ChatSidebar />

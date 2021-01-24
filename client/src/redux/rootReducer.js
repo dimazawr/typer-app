@@ -16,7 +16,7 @@ import {
 const initialState = {
   user: {
     // username: '',
-    // id: socket.id
+    // rooms: []
   },
   socketId: "",
   isLoggedIn: false,
@@ -34,9 +34,9 @@ const initialState = {
     //     name: '',
   ],
   error: {
-      isShown: false,
-      text: ''
-  }
+    isShown: false,
+    text: "",
+  },
 };
 
 export function rootReducer(state = initialState, action) {
@@ -94,7 +94,7 @@ export function rootReducer(state = initialState, action) {
       return { ...state, error: action.payload };
 
     case CLOSE_ERR_ALERT:
-        return {...state, error: {...state.error, isShown: false}}
+      return { ...state, error: { ...state.error, isShown: false } };
 
     default:
       return state;

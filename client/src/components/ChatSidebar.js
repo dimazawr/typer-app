@@ -33,9 +33,8 @@ export const ChatSidebar = () => {
   let usersList = users.map((user) => {
     return (
       <ListGroup.Item
-        action
         key={`${user.username}_id_${user.id}`}
-        className="bg-dark sidebar-text"
+        className="bg-dark sidebar-text rounded-0"
       >
         {user.username}
       </ListGroup.Item>
@@ -48,7 +47,7 @@ export const ChatSidebar = () => {
         action
         onClick={handleRoomLiClick}
         key={room}
-        className="bg-dark sidebar-text rounded-0"
+        className="bg-dark sidebar-text rounded-0 mb-1"
       >
         {room}
       </ListGroup.Item>
@@ -88,7 +87,7 @@ export const ChatSidebar = () => {
       <Button
         onClick={() => setCreateRoomOpen(true)}
         variant="dark"
-        className="sidebar-text"
+        className="sidebar-text rounded-0"
       >
         Add <i className="bi bi-plus icon-size"></i>
       </Button>

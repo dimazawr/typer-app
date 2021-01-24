@@ -10,7 +10,7 @@ import {
   SET_USERS_ROOMS,
   LOG_OUT,
   SHOW_ERR_ALERT,
-  CLOSE_ERR_ALERT,
+  CLOSE_ERR_ALERT
 } from "./types";
 
 export function joinChat(user) {

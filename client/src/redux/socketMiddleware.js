@@ -25,6 +25,10 @@ export const socketMiddleware = (ENDPOINT) => {
       store.dispatch(udpateRoomsList(listOfRooms));
     });
 
+    socket.on("connect_error", (err) => {
+      store.dispatch(showErrAlert({ isShown: true, text: err.message }));
+    });
+
     socket.on("disconnect", (reason) => {
       if (reason === "io server disconnect") {
         socket.connect();

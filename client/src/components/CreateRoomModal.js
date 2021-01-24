@@ -1,10 +1,10 @@
-//import ReactModal from "react-modal";
+
 import { useForm } from "react-hook-form";
 import { joinRoom } from "../redux/actions";
 import { useDispatch } from "react-redux";
 import { Button, Form, FormGroup, Modal } from "react-bootstrap";
 
-//ReactModal.setAppElement("#root");
+
 
 export const CreateRoomModal = ({ isOpen, closeModal }) => {
   const { register, handleSubmit, errors } = useForm();

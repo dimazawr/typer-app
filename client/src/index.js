@@ -11,12 +11,11 @@ import App from './App';
 import { rootReducer } from './redux/rootReducer';
 import { socketMiddleware } from './redux/socketMiddleware';
 
-const ENDPOINT = 'http://localhost:5000';//`https://chat-typer-app.herokuapp.com`;
+const ENDPOINT = `https://chat-typer-app.herokuapp.com`;
 
 
 const store = createStore(rootReducer,compose(
-  applyMiddleware(socketMiddleware(ENDPOINT)),
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  applyMiddleware(socketMiddleware(ENDPOINT))
 ))
 
 
